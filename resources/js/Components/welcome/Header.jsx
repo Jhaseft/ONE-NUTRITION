@@ -16,12 +16,26 @@ export default function Header({ auth }) {
         {/* NAVEGACIÓN A LA DERECHA */}
         <nav className="flex gap-6 text-lg md:text-xl font-medium">
           {auth?.user ? (
+            
+            <>
             <Link
-              href={route('dashboard')}
+              href={route('welcome')}
               className="relative hover:text-brandGold transition duration-300 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-brandGold after:transition-all after:duration-300 hover:after:w-full"
             >
-              Dashboard
+              Perfil
             </Link>
+              <Link
+                        href={route('logout')}
+                        method="post"
+                        as="button"
+                        className="relative hover:text-brandGold transition duration-300 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-brandGold after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                        Log Out
+                    </Link>
+            
+            
+            </>
+            
           ) : (
             <>
               <Link

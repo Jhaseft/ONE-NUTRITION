@@ -1,55 +1,59 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm } from "@inertiajs/react";
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        password: '',
+        password: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('password.confirm'), {
-            onFinish: () => reset('password'),
+        post(route("password.confirm"), {
+            onFinish: () => reset("password"),
         });
     };
 
     return (
-        <GuestLayout>
-            <Head title="Confirm Password" />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <Head title="Confirmar Contraseña" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your
-                password before continuing.
-            </div>
-
-            <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
+            <form
+                onSubmit={submit}
+                className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border"
+            >
+                {/* LOGO */}
+                <div className="flex justify-center mb-6">
+                    <img
+                        src="https://res.cloudinary.com/dnbklbswg/image/upload/v1763039388/automatizando_logo-removebg-preview_eekag0.png"
+                        alt="Logo"
+                        className="h-24 object-contain"
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
-                    </PrimaryButton>
-                </div>
+                <p className="text-gray-600 text-sm mb-4 text-center">
+                    Esta área es segura. Debes confirmar tu contraseña antes de continuar.
+                </p>
+
+                {/* Password */}
+                <label className="block text-gray-700 mb-1">Contraseña</label>
+                <input
+                    type="password"
+                    value={data.password}
+                    onChange={(e) => setData("password", e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
+                />
+                {errors.password && (
+                    <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                )}
+
+                {/* Botón */}
+                <button
+                    type="submit"
+                    disabled={processing}
+                    className="w-full mt-6 bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+                >
+                    {processing ? "Procesando..." : "Confirmar"}
+                </button>
             </form>
-        </GuestLayout>
+        </div>
     );
 }

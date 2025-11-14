@@ -1,50 +1,57 @@
-import PrimaryButton from '@/Components/PrimaryButton';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('verification.send'));
+        post(route("verification.send"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Email Verification" />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <Head title="Verificar Email" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just emailed to
-                you? If you didn't receive the email, we will gladly send you
-                another.
-            </div>
+            <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border">
 
-            {status === 'verification-link-sent' && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                {/* LOGO */}
+                <div className="flex justify-center mb-6">
+                    <img
+                        src="https://res.cloudinary.com/dnbklbswg/image/upload/v1763039388/automatizando_logo-removebg-preview_eekag0.png"
+                        alt="Logo"
+                        className="h-24 object-contain"
+                    />
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>
-                        Resend Verification Email
-                    </PrimaryButton>
+                <p className="text-gray-600 text-sm mb-4 text-center">
+                    Te enviamos un correo con el enlace de verificación.
+                </p>
+
+                {status === "verification-link-sent" && (
+                    <p className="text-green-600 text-sm text-center mb-4">
+                        ¡Se envió un nuevo enlace a tu correo!
+                    </p>
+                )}
+
+                <form onSubmit={submit}>
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+                    >
+                        Reenviar Email de Verificación
+                    </button>
 
                     <Link
-                        href={route('logout')}
+                        href={route("logout")}
                         method="post"
                         as="button"
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="w-full mt-4 text-center block text-gray-600 underline hover:text-black"
                     >
-                        Log Out
+                        Cerrar Sesión
                     </Link>
-                </div>
-            </form>
-        </GuestLayout>
+                </form>
+            </div>
+        </div>
     );
 }

@@ -1,10 +1,6 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
+import { useState } from "react";
 import { Head, Link, useForm } from '@inertiajs/react';
+import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,86 +11,115 @@ export default function Login({ status, canResetPassword }) {
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('login'), {
             onFinish: () => reset('password'),
+            preserveState: true,
         });
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <Head title="Login" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
+            <form
+                onSubmit={submit}
+                className="w-full max-w-md p-8 bg-white 
+                           rounded-2xl shadow-xl border border-gray-200"
+            >
+                {/* Logo */}
+                <div className="flex justify-center mb-6">
+                    <Link href="/" className="flex items-center">
+                        <img
+                            src="https://res.cloudinary.com/dnbklbswg/image/upload/v1763039388/automatizando_logo-removebg-preview_eekag0.png"
+                            alt="Logo de la empresa"
+                            className="h-24 w-24 object-contain bg-black"
+                        />
+                    </Link>
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                {/* Título */}
+                <h2 className="text-2xl text-center font-semibold text-gray-800 mb-6">
+                    Iniciar Sesión
+                    <span className="block w-16 mx-auto mt-2 border-b-2 border-yellow-500"></span>
+                </h2>
 
-                    <TextInput
+                {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
+
+                {/* Email */}
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-gray-800 font-medium mb-1">Email</label>
+                    <input
                         id="email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 
+                                   focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        required
+                        autoComplete="username"
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
+                    {errors.email && <p className="text-red-600 mt-1 text-sm">{errors.email}</p>}
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                {/* Password */}
+                <div className="mb-4">
+                    <label htmlFor="password" className="block text-gray-800 font-medium mb-1">Contraseña</label>
+                    <input
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300
+                                   focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        required
+                        autoComplete="current-password"
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <p className="text-red-600 mt-1 text-sm">{errors.password}</p>}
                 </div>
 
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData('remember', e.target.checked)
-                            }
-                        />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
+                {/* Recordarme */}
+                <div className="mb-6 flex items-center">
+                    <input
+                        id="remember"
+                        type="checkbox"
+                        checked={data.remember}
+                        onChange={(e) => setData('remember', e.target.checked)}
+                        className="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded"
+                    />
+                    <label htmlFor="remember" className="ml-2 text-gray-700 text-sm">
+                        Recordarme
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                {/* Acciones */}
+                <div className="flex items-center justify-between mb-4">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="text-yellow-600 text-sm underline hover:text-yellow-500"
                         >
-                            Forgot your password?
+                            ¿Olvidaste tu contraseña?
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className={`px-4 py-2 rounded-lg font-medium text-white
+                                    ${processing ? 'bg-gray-500' : 'bg-yellow-600 hover:bg-yellow-700'}
+                                    transition-colors duration-200`}
+                    >
+                        {processing ? 'Procesando...' : 'Iniciar Sesión'}
+                    </button>
+                </div>
+
+                {/* Google */}
+                <div className="mt-6">
+                    <GoogleLoginButton />
                 </div>
             </form>
-        </GuestLayout>
+        </div>
     );
 }

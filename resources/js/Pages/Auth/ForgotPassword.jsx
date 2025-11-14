@@ -1,55 +1,62 @@
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm } from "@inertiajs/react";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        email: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('password.email'));
+        post(route("password.email"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Forgot Password" />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <Head title="Olvidé mi Contraseña" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.
-            </div>
-
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
+            <form
+                onSubmit={submit}
+                className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border"
+            >
+                {/* LOGO */}
+                <div className="flex justify-center mb-6">
+                    <img
+                        src="https://res.cloudinary.com/dnbklbswg/image/upload/v1763039388/automatizando_logo-removebg-preview_eekag0.png"
+                        alt="Logo"
+                        className="h-24 object-contain"
+                    />
                 </div>
-            )}
 
-            <form onSubmit={submit}>
-                <TextInput
+                <p className="text-gray-600 text-sm mb-4 text-center">
+                    Te enviaremos un enlace para restablecer tu contraseña.
+                </p>
+
+                {status && (
+                    <p className="mb-4 text-sm text-green-600 text-center">{status}</p>
+                )}
+
+                {/* Email */}
+                <label className="block text-gray-700 mb-1">Email</label>
+                <input
                     id="email"
                     type="email"
-                    name="email"
                     value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
+                    onChange={(e) => setData("email", e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black"
                 />
+                {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
 
-                <InputError message={errors.email} className="mt-2" />
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
-                </div>
+                {/* Botón */}
+                <button
+                    type="submit"
+                    disabled={processing}
+                    className="w-full mt-6 bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+                >
+                    Enviar Enlace
+                </button>
             </form>
-        </GuestLayout>
+        </div>
     );
 }
