@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ProductFormModal({ categoryId, product, onClose, onSave }) {
   const [formData, setFormData] = useState({
@@ -89,72 +89,94 @@ export default function ProductFormModal({ categoryId, product, onClose, onSave 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 space-y-4"
+            className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 grid gap-6 overflow-auto max-h-[90vh]"
           >
-            <h2 className="text-2xl font-bold text-center text-gray-800">
+            <h2 className="text-2xl font-bold text-center text-gray-800 col-span-full">
               {product ? "Editar" : "Agregar"} Producto
             </h2>
 
             {/* Preview de imagen */}
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-wrap gap-4 justify-center items-center col-span-full">
               {product && product.image && (
-                <div className="flex-1 text-center">
+                <div className="w-full sm:w-1/2 text-center">
                   <p className="text-sm text-gray-500 mb-1">Imagen actual</p>
-                  <img src={product.image} alt="Actual" className="w-full max-w-[150px] h-auto rounded border"/>
+                  <img src={product.image} alt="Actual" className="w-full max-w-[150px] h-auto rounded border mx-auto"/>
                 </div>
               )}
               {preview && (
-                <div className="flex-1 text-center">
+                <div className="w-full sm:w-1/2 text-center">
                   <p className="text-sm text-gray-500 mb-1">{product ? "Nueva imagen" : "Imagen a agregar"}</p>
-                  <img src={preview} alt="Preview" className="w-full max-w-[150px] h-auto rounded border"/>
+                  <img src={preview} alt="Preview" className="w-full max-w-[150px] h-auto rounded border mx-auto"/>
                 </div>
               )}
             </div>
 
-            {/* Inputs */}
-            <input
-              type="text"
-              name="name"
-              placeholder="Nombre"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Descripción"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-            />
-            <input
-              type="number"
-              name="price"
-              placeholder="Precio"
-              value={formData.price}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              required
-            />
-            <input
-              type="number"
-              name="stock"
-              placeholder="Stock"
-              value={formData.stock}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              required
-            />
-            <input
-              type="file"
-              name="image"
-              onChange={handleChange}
-              accept="image/*"
-              className="w-full"
-            />
+            {/* Inputs en grilla responsive */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 col-span-full">
+              <div className="col-span-1 sm:col-span-2">
+                <label className="block text-gray-700 font-medium mb-1">Nombre</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Ej: Agua Mineral"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  required
+                />
+              </div>
 
-            <div className="flex justify-end gap-2 mt-2">
+              <div className="col-span-1 sm:col-span-2">
+                <label className="block text-gray-700 font-medium mb-1">Descripción</label>
+                <textarea
+                  name="description"
+                  placeholder="Opcional: detalles del producto"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Precio (Bs)</label>
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="Ej: 13"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Stock</label>
+                <input
+                  type="number"
+                  name="stock"
+                  placeholder="Ej: 50"
+                  value={formData.stock}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  required
+                />
+              </div>
+
+              <div className="col-span-1 sm:col-span-2">
+                <label className="block text-gray-700 font-medium mb-1">Imagen</label>
+                <input
+                  type="file"
+                  name="image"
+                  onChange={handleChange}
+                  accept="image/*"
+                  className="w-full"
+                />
+              </div>
+            </div>
+
+            {/* Botones */}
+            <div className="flex flex-wrap justify-end gap-2 col-span-full">
               <button
                 type="button"
                 onClick={onClose}
