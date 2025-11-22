@@ -3,7 +3,7 @@ import Layout from '@/Layouts/MainLayout';
 
 export default function Welcome({ auth }) {
     return (
-        <Layout title="Carrito de Compras" auth={auth}>
+        <Layout title="Distribuidora Aguilar" auth={auth}>
             <Products />
         </Layout>
     );
