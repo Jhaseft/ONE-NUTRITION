@@ -12,7 +12,7 @@ export default function EditOrderModal({ order, setOrder, onSave, onClose }) {
       })
       .catch((err) => console.error("Error cargando estados:", err));
   }, []);
-
+ 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4">
       <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
@@ -29,7 +29,7 @@ export default function EditOrderModal({ order, setOrder, onSave, onClose }) {
               }
             >
               {statuses
-                .filter((s) => s.id === 1 || s.id === 4) // solo pendiente o entregado
+                .filter((s) => s.id === 1 || s.id === 3) // solo pendiente o entregado
                 .map((s) => (
                   <option key={s.id} value={s.id}>
                     {s.name}
