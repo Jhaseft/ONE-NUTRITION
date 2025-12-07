@@ -47,6 +47,17 @@ export default function CheckoutPageContent() {
                 alert("Debes seleccionar una hora de entrega.");
                 return;
             }
+        }else{
+             if (!date) {
+                alert("Debes seleccionar una fecha de entrega.");
+                return;
+            }
+            if (!time) {
+                alert("Debes seleccionar una hora de entrega.");
+                return;
+            }
+
+
         }
 
         setProcessing(true);

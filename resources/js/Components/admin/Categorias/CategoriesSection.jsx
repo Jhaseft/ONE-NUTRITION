@@ -82,6 +82,7 @@ export default function CategoriesSection({ categories: initialCategoriesData })
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         onEdit={openEditModal}
+        refresh={refreshPage}
       />
 
       <CategoryPagination

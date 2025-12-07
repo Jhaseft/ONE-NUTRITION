@@ -17,16 +17,17 @@ class AdminControllerDashboard extends Controller
         $perPage = $request->integer('perPage', 4);
         $search  = $request->string('search', '');
 
-        // Cargar solo categorías raíz y contar productos totales incluyendo subcategorías
-        $categories = Category::withCount('products')
-            ->with('children') // traer subcategorías
-            ->whereNull('parent_id')
-            ->when($search, function($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
-            })
-            ->paginate($perPage)
-            ->onEachSide(1);
+       $categories = Category::withCount('products')
+    ->with(['children' => function($query) {
+        $query->withCount('products'); // 🔥 agrega products_count a los hijos
+    }])
+    ->whereNull('parent_id')
+    ->when($search, function($query, $search) {
+        $query->where('name', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+    })
+    ->paginate($perPage)
+    ->onEachSide(1);
 
         return Inertia::render('Admin/AdminDashboard', [
             'categories' => $categories,
@@ -122,20 +123,22 @@ class AdminControllerDashboard extends Controller
     /**
      * Paginación vía AJAX (React) para categorías raíz
      */
-    public function paginateCategories(Request $request)
-    {
-        $perPage = $request->integer('perPage', 4);
-        $search  = $request->string('search', '');
+   public function paginateCategories(Request $request)
+{
+    $perPage = $request->integer('perPage', 4);
+    $search  = $request->string('search', '');
 
-        $categories = Category::with('children')
-            ->whereNull('parent_id')
-            ->when($search, function($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
-            })
-            ->paginate($perPage)
-            ->onEachSide(1);
+    $categories = Category::withCount('products') // 🔥 IMPORTANTE
+        ->with('children')
+        ->whereNull('parent_id')
+        ->when($search, function($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        })
+        ->paginate($perPage)
+        ->onEachSide(1);
 
-        return response()->json($categories);
-    }
+    return response()->json($categories);
+}
+
 }

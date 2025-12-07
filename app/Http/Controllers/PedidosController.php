@@ -64,7 +64,7 @@ class PedidosController extends Controller
             // Mail::to($order->customer_phone.'@temporal.local')->send(new OrderConfirmation($order, $orderItems));
 
             // 🔔 Enviar mensaje WhatsApp al admin con resumen del pedido
-            try {
+           /* try {
                 $mensaje = "📌 *Nuevo pedido realizado*\n\n";
                 $mensaje .= "🧑‍💼 Cliente: {$order->customer_name} ({$order->customer_phone})\n";
                 $mensaje .= "📅 Fecha de entrega: {$order->delivery_date} a las {$order->delivery_time}\n";
@@ -99,7 +99,7 @@ class PedidosController extends Controller
             } catch (\Exception $e) {
                 Log::error(" Excepción enviando mensaje de pedido al admin: ".$e->getMessage());
             }
-
+        */
         // Vaciar carrito
         Cart::destroy();
 
