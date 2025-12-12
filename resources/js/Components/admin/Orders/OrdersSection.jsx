@@ -19,7 +19,9 @@ export default function OrdersSection() {
         `/admin/orders?page=${page}&search=${encodeURIComponent(search)}`
       );
       const data = await res.json();
+      console.log(data);
       setOrders(data);
+      
     } catch (err) {
       console.error("Error al obtener órdenes:", err);
     } finally {
@@ -126,12 +128,11 @@ export default function OrdersSection() {
             <tr className="bg-gray-100">
               <th className="py-2 px-2 border">ID</th>
               <th className="py-2 px-2 border">Cliente</th>
-              <th className="py-2 px-2 border">Total</th>
-              <th className="py-2 px-2 border">Estado</th>
-              <th className="py-2 px-2 border">Dirección</th>
-              <th className="py-2 px-2 border">Fecha Entrega</th>
-              <th className="py-2 px-2 border">Hora Entrega</th>
+              <th className="py-2 px-2 border">Telefono</th>
+              <th className="py-2 px-2 border">Email</th>
               <th className="py-2 px-2 border">Pago</th>
+              <th className="py-2 px-2 border">Estado</th>
+              <th className="py-2 px-2 border">Total</th>
               <th className="py-2 px-2 border">Acciones</th>
             </tr>
           </thead>
@@ -157,16 +158,13 @@ export default function OrdersSection() {
                 <tr key={order.id} className="hover:bg-gray-50">
                   <td className="text-center border px-2">{order.id}</td>
                   <td className="text-center border px-2">{order.customer_name || "-"}</td>
-                  <td className="text-center border px-2">{order.total} bs</td>
-                  <td className="text-center border px-2">{order.status?.name || "-"}</td>
-                  <td className="text-center border px-2">{order.note || "-"}</td>
-                  <td className="text-center border px-2">
-                    {order.delivery_date ? order.delivery_date.split("T")[0] : "-"}
-                  </td>
-                  <td className="text-center border px-2">{order.delivery_time || "-"}</td>
-                  <td className="text-center border px-2">
+                   <td className="text-center border px-2">{order.customer_phone}</td>
+                   <td className="text-center border px-2"> {order.customer_email}</td>
+                   <td className="text-center border px-2">
                     {order.payment_method?.name || "-"}
                   </td>
+                  <td className="text-center border px-2">{order.status?.name || "-"}</td>
+                  <td className="text-center border px-2">{order.total} bs</td>
 
                   <td className="px-2 py-2 border flex flex-wrap gap-1 justify-center">
                     <button

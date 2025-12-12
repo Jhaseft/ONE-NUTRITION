@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminControllerDashboard;
 use App\Http\Controllers\AdminCategoryProductsController;
 use App\Http\Controllers\AdminProductVariantsController;
+use App\Http\Controllers\VentasController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use Inertia\Inertia;
@@ -29,6 +30,9 @@ Route::get('/', function () {
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
+Route::get('/products/{slug}/{product}', [ProductController::class, 'show'])
+    ->name('products.show');
+    
 Route::prefix('carrito')->group(function () {
     Route::get('/data', [CartController::class, 'data'])->name('carrito.data');
     Route::post('/add', [CartController::class, 'add'])->name('carrito.add');
@@ -68,6 +72,11 @@ Route::prefix('admin')->group(function () {
     Route::put('/products/{product}', [AdminCategoryProductsController::class, 'update']);
     Route::delete('/products/{product}', [AdminCategoryProductsController::class, 'destroy']);
 
+
+Route::get('/Ventas', [VentasController::class, 'index'])->name('admin.ventas');
+
+Route::get('/products/{slug}/{product}', [VentasController::class, 'show'])
+    ->name('products.show');
 
 // Obtener atributos y variantes de un producto
 Route::get('/products/{product}/attributes', [AdminProductVariantsController::class, 'getAttributes'])

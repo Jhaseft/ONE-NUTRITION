@@ -3,7 +3,7 @@ import Layout from '@/Layouts/MainLayout';
 
 export default function Welcome({ auth }) {
     return (
-        <Layout title="Distribuidora Aguilar" auth={auth}>
+        <Layout title="Exclusive|Inicio" auth={auth}>
             <Products />
         </Layout>
     );

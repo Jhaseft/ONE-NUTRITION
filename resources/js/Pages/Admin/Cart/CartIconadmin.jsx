@@ -1,7 +1,7 @@
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/Contexts/CartContext';
 
-export default function CartIcon({ onClick }) {
+export default function CartIconadmin({ onClick }) {
   const { cartCount } = useCart();
 
   return (

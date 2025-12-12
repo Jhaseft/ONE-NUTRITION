@@ -1,4 +1,5 @@
-export default function CartItems({ cart, loading, subtotal, total }) {
+export default function CartItems({ cart, loading, total }) {
+
     return (
         <div className="border border-gray-300 p-4 rounded-lg mb-6 bg-white">
             <h3 className="font-bold mb-4 text-black text-xl">Artículos en tu carrito</h3>
@@ -9,10 +10,11 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                 <p className="text-gray-500">No hay artículos en el carrito</p>
             ) : (
                 <div className="overflow-x-auto">
+               
                     <table className="hidden sm:table min-w-full border-collapse">
                         <thead>
                             <tr className="bg-gray-100 text-black">
-                                <th className="py-2 px-4 text-left">Imagen</th>
+                                <th className="py-2 px-4 text-left"></th>
                                 <th className="py-2 px-4 text-left">Producto</th>
                                 <th className="py-2 px-4 text-center">Cantidad</th>
                                 <th className="py-2 px-4 text-right">Precio (Bs)</th>
@@ -23,7 +25,6 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                         <tbody>
                             {cart.map(item => {
                                 const itemSubtotal = Number(item.qty) * Number(item.price);
-
                                 return (
                                     <tr key={item.rowId} className="border-b border-gray-200">
                                         <td className="py-2 px-4">
@@ -33,7 +34,12 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                                                 className="w-14 h-14 object-cover rounded"
                                             />
                                         </td>
-                                        <td className="py-2 px-4 text-black font-semibold">{item.name}</td>
+                                        <td className="py-2 px-4 text-black font-semibold">
+                                            <p>{item.name}</p>
+                                            <p className="text-gray-600 text-sm">
+                                                {item.options.variant ? item.options.variant : item.variant}
+                                            </p>
+                                        </td>
                                         <td className="py-2 px-4 text-center">{item.qty}</td>
                                         <td className="py-2 px-4 text-right">{Number(item.price).toFixed(2)}</td>
                                         <td className="py-2 px-4 text-right font-semibold">{itemSubtotal.toFixed(2)}</td>
@@ -52,11 +58,10 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                         </tfoot>
                     </table>
 
-                    {/* --- MOBILE VERSION --- */}
+                    
                     <div className="sm:hidden space-y-4">
                         {cart.map(item => {
                             const itemSubtotal = Number(item.qty) * Number(item.price);
-
                             return (
                                 <div key={item.rowId} className="border border-gray-200 rounded-lg p-3">
                                     <div className="flex items-center gap-3">
@@ -67,6 +72,7 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                                         />
                                         <div>
                                             <p className="text-black font-semibold">{item.name}</p>
+                                            <p className="text-gray-600 text-sm">{item.options.variant || item.variant}</p>
                                             <p className="text-gray-600 text-sm">Precio: {Number(item.price).toFixed(2)} Bs</p>
                                         </div>
                                     </div>
@@ -84,7 +90,6 @@ export default function CartItems({ cart, loading, subtotal, total }) {
                             );
                         })}
 
-                        {/* TOTAL PARA MÓVIL */}
                         <div className="flex justify-between border-t border-gray-300 pt-3 text-lg font-bold text-black">
                             <span>Total:</span>
                             <span>{Number(total).toFixed(2)} Bs</span>

@@ -12,7 +12,7 @@ class OrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $order;
+    public $order; 
     public $items;
 
     public function __construct(Order $order, $items)
@@ -20,7 +20,7 @@ class OrderConfirmation extends Mailable
         $this->order = $order;
         $this->items = $items;
     }
-
+ 
     public function build()
     {
         return $this->subject('Confirmación de tu pedido')

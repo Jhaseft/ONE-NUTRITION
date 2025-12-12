@@ -3,10 +3,10 @@ import Header from '@/Components/welcome/Header';
 import Footer from '@/Components/welcome/Footer';
 import { CartProvider } from '@/Contexts/CartContext';
 import { useState } from 'react';
-import CartIcon from '@/Components/welcome/Cart/CartIcon';
-import CartModal from '@/Components/welcome/Cart/CartModal';
+import CartIconadmin from '../Cart/CartIconadmin';
+import CartModaladmin from '../Cart/CartModaladmin';
 
-export default function Layout({ title, auth, children }) {
+export default function Layoutadmin({ title, auth, children }) {
   const [isCartOpen, setCartOpen] = useState(false);
 
   return (
@@ -22,14 +22,14 @@ export default function Layout({ title, auth, children }) {
 
         
         <div className="fixed bottom-6 right-6 z-[9999] ">
-          <CartIcon
+          <CartIconadmin
             className="text-black hover:text-gray-800 transition"
             onClick={() => setCartOpen(true)}
           />
         </div>
 
         
-        <CartModal
+        <CartModaladmin
           isOpen={isCartOpen}
           onClose={() => setCartOpen(false)}
           className="z-[99999]"

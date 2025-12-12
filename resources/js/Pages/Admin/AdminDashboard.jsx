@@ -6,7 +6,7 @@ import AdminHeader from "@/Components/admin/AdminHeader.jsx";
 import CategoriesSection from "@/Components/admin/Categorias/CategoriesSection.jsx";
 import OrdersSection from "@/Components/admin/Orders/OrdersSection.jsx";
 import ReportsSection from "@/Components/admin/Reportes/ReportsSection";
-
+import { Link } from "@inertiajs/react";
 export default function AdminDashboard({ categories = [] }) {
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
@@ -26,7 +26,6 @@ export default function AdminDashboard({ categories = [] }) {
       <AdminHeader onLogout={handleLogout} />
       <Head title="Admin Dashboard" />
 
-      {/* HERO */}
       <section className="min-h-screen flex flex-col justify-center items-center text-center space-y-10 px-4">
         <motion.h1
           className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-gray-800 drop-shadow-lg leading-tight"
@@ -37,8 +36,15 @@ export default function AdminDashboard({ categories = [] }) {
           Bienvenido <span className="text-pink-500">Admin</span> 🚀
         </motion.h1>
 
-        {/* Botones */}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 w-full max-w-4xl">
+
+          <Link
+            href="/admin/Ventas" 
+            className="px-6 py-4 bg-white rounded-2xl shadow-lg text-base sm:text-lg font-semibold text-black  transition w-full"
+          >
+            Ventas
+          </Link>
           <button
             onClick={() => scrollToSection(section1Ref)}
             className="px-6 py-4 bg-white rounded-2xl shadow-lg text-base sm:text-lg font-semibold text-gray-800 hover:bg-pink-100 transition w-full"
@@ -68,11 +74,11 @@ export default function AdminDashboard({ categories = [] }) {
       </section>
 
       <section ref={section2Ref} className="min-h-screen flex justify-center items-center px-4">
-        <OrdersSection  />
+        <OrdersSection />
       </section>
 
       <section ref={section3Ref} className="min-h-screen flex justify-center items-center px-4">
-        <ReportsSection/>
+        <ReportsSection />
       </section>
 
     </div>

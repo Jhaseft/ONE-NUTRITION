@@ -12,16 +12,19 @@ class CartController extends Controller
     public function add(Request $request)
 { 
     Cart::add([
-        'id' => $request->id,
-        'name' => $request->nombre,
-        'qty' => (int) $request->cantidad ?? 1,
-        'price' => (float) $request->precio,
-        'weight' => 0,
-        'options' => [
-            'uuid' => uniqid(),
-            'image' => $request->image ?? null, // <-- aquí guardas la imagen
-        ]
-    ]);
+    'id' => $request->id,
+    'name' => $request->nombre,
+    'qty' => (int) $request->cantidad ?? 1,
+    'price' => (float) $request->precio,
+    'weight' => 0,
+    'options' => [
+        'uuid' => uniqid(),
+        'image' => $request->image ?? null,
+        'sku' => $request->sku ?? null,
+        'variant' => $request->variant ?? null,
+        'stock' => $request->stock ?? null,
+    ]
+]);
 
     return response()->json([
         'success' => true,
@@ -31,19 +34,29 @@ class CartController extends Controller
     ]);
 }
 
-    // Actualizar cantidad
     public function update(Request $request, $rowId)
-    {
-        $request->validate(['cantidad' => 'required|integer|min:1']);
-        Cart::update($rowId, $request->cantidad);
+{
+    $request->validate(['cantidad' => 'required|integer|min:1']);
+    
+    $item = Cart::get($rowId);
+    $stock = $item->options->stock ?? 9999;
 
+    if ($request->cantidad > $stock) {
         return response()->json([
-            'success' => true,
-            'cart' => Cart::content()->values(),
-            'cartCount' => Cart::count(),
-            'cartTotal' => Cart::total(),
+            'success' => false,
+            'message' => "No hay suficiente stock. Máximo disponible: $stock",
         ]);
     }
+
+    Cart::update($rowId, $request->cantidad);
+
+    return response()->json([
+        'success' => true,
+        'cart' => Cart::content()->values(),
+        'cartCount' => Cart::count(),
+        'cartTotal' => Cart::total(),
+    ]);
+}
 
     // Eliminar producto
     public function remove($rowId)

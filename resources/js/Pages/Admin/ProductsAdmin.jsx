@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import SearchBar from '@/Components/welcome/Search';
-import CategoryFilter from './CategoryFilter';
+//import SearchBar from '@/Components/welcome/Search';
+//import CategoryFilter from './CategoryFilter';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import ProductCard from './ProductCard';
+import ProductCardadmin from './ProductCardadmin';
 
-export default function Products() {
+export default function ProductsAdmin() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -112,6 +112,9 @@ export default function Products() {
                     {category.description}
                   </p>
                 )}
+                <h2>
+                  ESTO ES ADMIIINININ
+                </h2>
               </div>
 
               {filteredProducts.length > 0 && (
@@ -178,14 +181,14 @@ function CategorySwiper({ products }) {
     bg-white text-black hover:scale-105 hover:shadow-2xl transition-all duration-500
     flex justify-center`}
         >
-          <ProductCard product={product} />
+          <ProductCardadmin product={product} />
         </SwiperSlide>
       ))}
     </Swiper>
   ) : (
     <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-8">
       {products.map(product => (
-        <ProductCard
+        <ProductCardadmin
           key={product.id}
           product={product}
         />

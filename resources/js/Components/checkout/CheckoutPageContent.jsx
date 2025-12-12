@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import { useCart } from '@/Contexts/CartContext';
 import CheckoutHeader from './CheckoutHeader';
-import CustomerInfoForm from './CustomerInfo'; 
+import CustomerInfoForm from './CustomerInfo';
 import CartItems from './CartItems';
 import OrderSummary from './OrderSummary';
 import Layout from '@/Layouts/LayoutCheckout';
 import { Head, router } from '@inertiajs/react';
+import MethodPay from './MethodPay';
 
 export default function CheckoutPageContent() {
     const { cart = [], subtotal = 0, total = 0 } = useCart();
@@ -15,6 +16,8 @@ export default function CheckoutPageContent() {
 
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
+    const [customerMail, setCustomerMail] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState('transfer');
 
     useEffect(() => {
         if (cart.length > 0) setLoading(false);
@@ -25,33 +28,72 @@ export default function CheckoutPageContent() {
             alert("Debes ingresar tu nombre y número de teléfono.");
             return;
         }
+        if (!customerMail.trim()) {
+            alert("Debes ingresar tu correo electrónico.");
+            return;
+        }
 
         setProcessing(true);
 
         const orderItems = cart.map(item => ({
             id: item.id,
+            name: item.name,
             quantity: item.qty,
             price: item.price,
-            subtotal: item.price * item.qty
+            subtotal: item.price * item.qty,
+            sku: item.options.sku,
+            size: item.options.size || item.variant || item.options.variant,
         }));
 
-        router.post('/orders/store', {
-            customer_name: customerName,
-            customer_phone: customerPhone,
-            shipping_type: shippingType,
-            delivery_date: date,
-            delivery_time: time,
-            address,
-            cart: orderItems,
-            subtotal,
-            total,
-        }, {
-            onError: (errors) => {
-                console.error("Error al crear pedido: ", errors);
-                setProcessing(false);
-            },
-            onSuccess: () => setProcessing(false)
+        // Construir mensaje llamativo para WhatsApp
+        const messageLines = [
+            `🛒 *Nuevo Pedido de ${customerName}*`,
+            `📞 Teléfono: ${customerPhone}`,
+            `✉️ Correo: ${customerMail}`,
+            `💳 Método de pago: ${paymentMethod === 'qr' ? 'QR' : 'Transferencia'}`,
+            '',
+            '*Detalles del pedido:*'
+        ];
+
+        orderItems.forEach(i => {
+            messageLines.push(`• ${i.name} | Talla: ${i.size} | SKU: ${i.sku} | Cantidad: ${i.quantity} | Subtotal: $${i.subtotal}`);
         });
+
+        messageLines.push('', `*Total: $${total}*`);
+
+        const whatsappMessage = encodeURIComponent(messageLines.join('\n'));
+        const whatsappNumber = "59165359695";
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+        // Abrir WhatsApp en nueva pestaña primero
+        window.open(whatsappURL, '_blank');
+
+        // Registrar pedido en el backend después de abrir WhatsApp
+        setTimeout(() => {
+            const paymentMethodId = paymentMethod === "qr" ? 1 : 2;
+
+            const orderData = {
+                customer_name: customerName,
+                customer_phone: customerPhone,
+                customer_email: customerMail,
+                payment_method: paymentMethodId,
+                cart: orderItems,
+                status: 2,
+                total,
+            };
+
+            router.post('/orders/store', orderData, {
+                onError: (errors) => {
+                    console.error("Error al crear pedido: ", errors);
+                },
+                onSuccess: () => {
+                    console.log("✅ Pedido registrado en el backend");
+                },
+                preserveState: true
+            });
+
+            setProcessing(false);
+        }, 500);
     };
 
     return (
@@ -61,27 +103,24 @@ export default function CheckoutPageContent() {
             <div className="max-w-3xl mx-auto p-6 bg-white text-black rounded-2xl shadow-lg border border-gray-300">
                 <CheckoutHeader />
 
-                {/* Formulario de cliente */}
                 <CustomerInfoForm
                     customerName={customerName}
                     setCustomerName={setCustomerName}
                     customerPhone={customerPhone}
                     setCustomerPhone={setCustomerPhone}
+                    customerMail={customerMail}
+                    setCustomerMail={setCustomerMail}
                     className="mb-6"
                 />
 
-                {/* Carrito de productos */}
                 <CartItems cart={cart} loading={loading} subtotal={subtotal} total={total} className="mb-6" />
 
-                
-                {/* Resumen de pedido */}
+                <MethodPay method={paymentMethod} setMethod={setPaymentMethod} />
+
                 <OrderSummary cart={cart} subtotal={subtotal} total={total} loading={loading} className="mb-6" />
 
-                {/* Botón de realizar pedido */}
                 <button
-                    className={`w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg shadow-md flex justify-center items-center transition-all duration-300 ${
-                        (loading || processing) ? 'opacity-50 cursor-not-allowed' : ''
-                    }`}
+                    className={`w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg shadow-md flex justify-center items-center transition-all duration-300 ${(loading || processing) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     onClick={handlePlaceOrder}
                     disabled={loading || processing}
                 >
@@ -91,7 +130,7 @@ export default function CheckoutPageContent() {
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                         </svg>
                     )}
-                    {processing ? "Procesando..." : "Realizar Pedido"}
+                    {processing ? "⏳ Enviando a WhatsApp y registrando..." : " Enviar a WhatsApp y registrar pedido"}
                 </button>
             </div>
         </Layout>

@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import animations from '@midudev/tailwind-animations';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -19,10 +20,13 @@ export default {
             },
             colors: {
                 brandBlack: '#000000',
-                brandGold: '#C9A761', // dorado metálico
+                brandGold: '#C9A761',
             },
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        animations,
+    ],
 };

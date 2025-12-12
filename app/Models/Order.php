@@ -14,17 +14,14 @@ class Order extends Model
 
     protected $table = 'orders';
 
-    protected $fillable = [
-        'customer_name',
-        'customer_phone',
-        'status_id',
-        'payment_method_id',
-        'total',
-        'note',
-        'delivery_date',
-        'delivery_time',
-    ];
-
+   protected $fillable = [
+    'customer_name',
+    'customer_phone',
+    'customer_email',
+    'status_id',
+    'payment_method_id',
+    'total',
+];
     protected $casts = [
         'total' => 'decimal:2',
         'delivery_date' => 'date',

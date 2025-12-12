@@ -27,10 +27,18 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (product) => {
     try {
       const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-      const existing = cart.find(item => item.id === product.id);
+  
+      const existing = cart.find(item =>
+        item.id === product.id && item.options?.variant === product.variant
+      );
 
       if (existing) {
         const newQty = existing.qty + (product.cantidad || 1);
+        if (newQty > existing.options.stock) {
+          alert(`No hay suficiente stock disponible. Máximo: ${existing.options.stock}`);
+          return;
+        }
+
         const res = await fetch(`/carrito/update/${existing.rowId}`, {
           method: "PATCH",
           headers: {
@@ -39,6 +47,7 @@ export const CartProvider = ({ children }) => {
           },
           body: JSON.stringify({ cantidad: newQty }),
         });
+
         const data = await res.json();
         if (data.success) {
           setCart(data.cart || []);
@@ -48,6 +57,11 @@ export const CartProvider = ({ children }) => {
           setTotal(sub);
         }
       } else {
+        if ((product.cantidad || 1) > product.stock) {
+          alert(`No hay suficiente stock disponible. Máximo: ${product.stock}`);
+          return;
+        }
+
         const res = await fetch("/carrito/add", {
           method: "POST",
           headers: {
@@ -55,10 +69,9 @@ export const CartProvider = ({ children }) => {
             "X-CSRF-TOKEN": csrfToken,
           },
           body: JSON.stringify(product),
-          
         });
+
         const data = await res.json();
-        console.log("Respuesta al agregar al carrito:", data);
         if (data.success) {
           setCart(data.cart || []);
           setCartCount(data.cartCount);

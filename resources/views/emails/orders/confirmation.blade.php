@@ -1,33 +1,43 @@
 @component('mail::message')
-{{-- Cabecera con logo --}}
-<div style="text-align:center; padding:20px; background-color:#000000;">
-    <img src="https://res.cloudinary.com/dcmjhycsr/image/upload/v1763825595/Captura_de_pantalla_2025-11-22_102220-removebg-preview_eur39c.png" 
-         alt="Mi Empresa" 
-         style="width:150px; max-width:100%; height:auto;">
-</div>
+{{-- Logo --}}
+<img src="{{ asset('https://res.cloudinary.com/dnbklbswg/image/upload/v1765267450/exclusive-removebg-preview_x68ft5.png') }}" alt="Exclusive" style="width:150px; margin-bottom:20px;">
 
-# <span style="color:#c00000;">Pedido confirmado</span>
+# Gracias por comprar en Exclusive, {{ $order->customer_name }}!
 
-Hola {{ $order->user->name }},
+A continuación el resumen de tu pedido:
 
-Tu pedido ha sido recibido correctamente. Aquí tienes los detalles más importantes:
+<table style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="border-bottom:1px solid #ddd; text-align:left; padding:8px;">Producto</th>
+            <th style="border-bottom:1px solid #ddd; text-align:center; padding:8px;">Cantidad</th>
+            <th style="border-bottom:1px solid #ddd; text-align:right; padding:8px;">Precio (Bs)</th>
+            <th style="border-bottom:1px solid #ddd; text-align:right; padding:8px;">Subtotal (Bs)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($items as $item)
+        <tr>
+            <td style="padding:8px;">{{ $item->name ?? $item->product->name }}<br><small>SKU: {{ $item->sku }}</small></td>
+            <td style="padding:8px; text-align:center;">{{ $item->quantity }}</td>
+            <td style="padding:8px; text-align:right;">{{ number_format($item->price, 2) }}</td>
+            <td style="padding:8px; text-align:right;">{{ number_format($item->subtotal, 2) }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" style="padding:8px; text-align:right; font-weight:bold;">Total:</td>
+            <td style="padding:8px; text-align:right; font-weight:bold;">{{ number_format($order->total, 2) }} Bs</td>
+        </tr>
+    </tfoot>
+</table>
 
-**ID de pedido:** {{ $order->id }}  
-**Total:** Bs.{{ number_format($order->total, 2) }}  
-**Tipo de envío:** {{ ucfirst($order->note) }}  
-**Fecha de entrega:** {{ $order->delivery_date ? $order->delivery_date->format('d/m/Y') : 'N/A' }}  
-**Hora de entrega:** {{ $order->delivery_time ?? 'N/A' }}
+**Información importante:**
 
-@component('mail::table')
-| Producto | Cantidad | Precio | Subtotal |
-|----------|----------|-------|---------|
-@foreach ($items as $item)
-| {{ $item->product->name }} | {{ $item->quantity }} | Bs.{{ number_format($item->price, 2) }} | Bs.{{ number_format($item->subtotal, 2) }} |
-@endforeach
-@endcomponent
+- Por favor envía tu comprobante de pago al correo o WhatsApp del vendedor.  
+- Tu pedido será procesado pronto y recibirás notificación del envío.
 
-<div style="color:#c00000; font-weight:bold; margin-top:20px;">
-Gracias por comprar con nosotros!
-</div>
+Gracias por confiar en Exclusive.
 
 @endcomponent
