@@ -1,5 +1,5 @@
 import Layout from '@/Layouts/MainLayout';
-import Showcontent from './showcontent';
+import Showcontent from './Showcontent';
 
 export default function ShowProduct({ product }) {
  return (
