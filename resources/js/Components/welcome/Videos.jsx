@@ -1,8 +1,8 @@
 export default function Videos() {
   const videos = [
-    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765539773/video3_mzmbaf.mp4",
-    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765539770/WhatsApp_Video_2025-12-11_at_06.54.18_cywcip.mp4",
-    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765539764/video_2_acdum0.mp4"
+    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765626231/video3_onxuao.mp4",
+    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765626226/WhatsApp_Video_2025-12-11_at_06.54.18_o4bzdd.mp4",
+    "https://res.cloudinary.com/ds2tkqwtr/video/upload/v1765626221/video_2_pbjrvx.mp4"
   ];
 
   return (

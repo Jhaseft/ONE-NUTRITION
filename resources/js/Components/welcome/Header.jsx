@@ -20,16 +20,16 @@ export default function Header({ auth }) {
       <header className="w-full bg-white text-black shadow-lg py-4 border-b-2 border-black">
         <div className="container mx-auto flex justify-between items-center px-6">
 
-          {/* LOGO */}
+        
           <Link href="/" className="flex items-center gap-3">
             <img
-              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765267450/exclusive-removebg-preview_x68ft5.png"
+              src="https://res.cloudinary.com/ds2tkqwtr/image/upload/v1765626355/exclusive-removebg-preview_k132nu.png"
               alt="Logo de la tienda"
               className="h-20 w-40 md:h-40 md:w-72 object-contain transition-transform duration-300 hover:scale-105 drop-shadow-lg"
             />
           </Link>
 
-          {/* NAV */}
+          
           <nav className="flex md:text-xl md:gap-10 text-xs gap-1 font-medium">
             <Link
               href="/Contacto"

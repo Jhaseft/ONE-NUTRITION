@@ -77,7 +77,7 @@ export default function MethodPay({ method, setMethod }) {
                         </p>
 
                         <img
-                            src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765423641/WhatsApp_Image_2025-12-10_at_23.23.41_gpkzhz.jpg"
+                            src="https://res.cloudinary.com/ds2tkqwtr/image/upload/v1765626212/WhatsApp_Image_2025-12-10_at_23.23.41_pdgjqd.jpg"
                             alt="QR de pago"
                             className="w-48 mx-auto rounded-xl shadow-lg"
                         />
