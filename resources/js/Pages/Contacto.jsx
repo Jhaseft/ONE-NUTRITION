@@ -19,7 +19,7 @@ export default function Contacto() {
                 
                 <div className="flex justify-center space-x-10 mb-6">
                     <a 
-                        href="https://www.instagram.com/marouniformes2023" 
+                        href="https://www.instagram.com/maro_uniformes_?igsh=MTZwcm02bzdmMnl5ZA==" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="text-turquoise hover:text-darkTurquoise transition-colors"

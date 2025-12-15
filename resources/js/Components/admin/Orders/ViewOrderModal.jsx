@@ -1,5 +1,5 @@
 export default function ViewOrderModal({ order, onClose }) {
-  console.log("orden", order);
+  
 
   // Convertir total a número por seguridad
   const total = Number(order.total);

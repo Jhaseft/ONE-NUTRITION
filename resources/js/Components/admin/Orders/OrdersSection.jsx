@@ -19,7 +19,7 @@ export default function OrdersSection() {
         `/admin/orders?page=${page}&search=${encodeURIComponent(search)}`
       );
       const data = await res.json();
-      console.log(data);
+      
       setOrders(data);
       
     } catch (err) {

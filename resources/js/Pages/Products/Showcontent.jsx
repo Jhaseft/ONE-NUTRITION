@@ -4,7 +4,7 @@ import ProductGallery from "./ProductGallery";
 
 export default function ShowProduct({ product }) {
 
-  console.log("productos que llegan", product);
+  
 
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.find(v => v.stock > 0) || null
@@ -41,11 +41,11 @@ export default function ShowProduct({ product }) {
     if (!selectedVariant || isOutOfStock) return;
 
     setAdding(true);
-
+    
     await addToCart({
       id: product.id,
       nombre: product.name,
-      precio: selectedVariant.price || product.price,
+      precio:  product.price,
       cantidad: quantity,
       image: mainImage,
       sku: selectedVariant.sku,

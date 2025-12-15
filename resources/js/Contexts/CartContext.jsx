@@ -19,7 +19,7 @@ export const CartProvider = ({ children }) => {
         const sub = (data.cart || []).reduce((acc, item) => acc + item.price * item.qty, 0);
         setSubtotal(sub);
         setTotal(sub);
-        console.log("Carrito inicial cargado:", data);
+        
       })
       .catch(err => console.error(err));
   }, []);

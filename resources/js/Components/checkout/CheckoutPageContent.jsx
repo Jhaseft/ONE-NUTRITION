@@ -84,7 +84,7 @@ export default function CheckoutPageContent() {
                     console.error("Error al crear pedido: ", errors);
                 },
                 onSuccess: () => {
-                    console.log("✅ Pedido registrado en el backend");
+                    
                 },
                 preserveState: true
             });
