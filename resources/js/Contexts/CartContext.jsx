@@ -31,7 +31,7 @@ export const CartProvider = ({ children }) => {
       const existing = cart.find(item =>
         item.id === product.id && item.options?.variant === product.variant
       );
-
+ 
       if (existing) {
         const newQty = existing.qty + (product.cantidad || 1);
         if (newQty > existing.options.stock) {
