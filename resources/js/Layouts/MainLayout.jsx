@@ -11,7 +11,7 @@ export default function Layout({ title, auth, children }) {
 
   return (
     <CartProvider>
-      <Head title={title || "Marou Uniformes"} />
+      <Head title={title || "ONE NUTRITION"} />
 
       <div className="min-h-screen flex flex-col bg-white text-darkGray relative">
         <Header auth={auth} />
@@ -23,7 +23,7 @@ export default function Layout({ title, auth, children }) {
         <Footer />
 
         
-        <div className="fixed bottom-24 right-6 z-[9000]">
+        <div className="fixed  bottom-24 right-6 z-[9000]">
           <CartIcon onClick={() => setCartOpen(true)} />
         </div>
 

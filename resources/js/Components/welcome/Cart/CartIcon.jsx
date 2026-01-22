@@ -11,7 +11,7 @@ export default function CartIcon({ onClick }) {
     >
       <div
         className="
-          bg-darkGray
+          bg-white
           w-12
           h-40
           rounded-l-full

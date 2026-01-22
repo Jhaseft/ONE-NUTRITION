@@ -17,15 +17,15 @@ export default function Header({ auth }) {
 
   return (
     <>
-      <header className="w-full bg-darkGray text-black shadow-lg py-4 border-b-2 border-black">
+      <header className="w-full bg-white text-black  py-4 border-b-2 border-black">
         <div className="container mx-auto flex justify-between items-center px-6">
 
 
           <Link href="/" className="flex items-center gap-3">
             <img
-              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1765627552/Captura_de_pantalla_2025-12-13_075927-removebg-preview_m4lqsz.png"
+              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1769090381/WhatsApp_Image_2026-01-22_at_09.56.18_2_yn4krk.jpg"
               alt="Logo de la tienda"
-              className="h-20 w-40 md:h-40 md:w-72 object-contain transition-transform duration-300 hover:scale-105 drop-shadow-lg"
+              className="h-20 w-40 md:h-40 md:w-72 object-contain transition-transform duration-300 hover:scale-105 "
             />
           </Link>
 
@@ -37,7 +37,7 @@ export default function Header({ auth }) {
       relative
       text-xl
       font-semibold
-      text-grayCustom
+      text-black
       transition-all
       duration-300
       hover:text-turquoise
@@ -71,7 +71,7 @@ export default function Header({ auth }) {
         </div>
       )}
 
-      {/* Animación */}
+ 
       <style>
         {`
           @keyframes slideDown {
