@@ -6,7 +6,7 @@ import { useState } from 'react';
 import CartIcon from '@/Components/welcome/Cart/CartIcon';
 import CartModal from '@/Components/welcome/Cart/CartModal';
 
-export default function Layout({ title, auth, children }) {
+export default function Layout({ title, auth, children, fullWidth = false }) {
   const [isCartOpen, setCartOpen] = useState(false);
 
   return (
@@ -16,18 +16,16 @@ export default function Layout({ title, auth, children }) {
       <div className="min-h-screen flex flex-col bg-white text-darkGray relative">
         <Header auth={auth} />
 
-        <main className="flex-1 container mx-auto px-6 py-10">
+        <main className={fullWidth ? 'flex-1' : 'flex-1 container mx-auto px-6 py-10'}>
           {children}
         </main>
 
         <Footer />
 
-        
-        <div className="fixed  bottom-24 right-6 z-[9000]">
+        <div className="fixed bottom-24 right-6 z-[9000]">
           <CartIcon onClick={() => setCartOpen(true)} />
         </div>
 
-       
         <CartModal
           isOpen={isCartOpen}
           onClose={() => setCartOpen(false)}
@@ -37,22 +35,7 @@ export default function Layout({ title, auth, children }) {
           href="https://wa.me/56978843627"
           target="_blank"
           rel="noopener noreferrer"
-          className="
-            fixed
-            bottom-6
-            right-6
-            w-16
-            h-16
-            rounded-full
-            bg-turquoise
-            shadow-xl
-            flex
-            items-center
-            justify-center
-            hover:bg-darkTurquoise
-            transition
-            z-[8000]
-          "
+          className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-turquoise shadow-xl flex items-center justify-center hover:bg-darkTurquoise transition z-[8000]"
         >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
