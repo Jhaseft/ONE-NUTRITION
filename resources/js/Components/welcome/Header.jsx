@@ -1,9 +1,20 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
+
+const navLinks = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Productos', href: '#productos' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Contacto', href: '/Contacto' },
+];
 
 export default function Header({ auth }) {
   const { props } = usePage();
   const [flashMessage, setFlashMessage] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const ticking = useRef(false);
 
   useEffect(() => {
     if (props?.flash?.success) {
@@ -15,63 +26,124 @@ export default function Header({ auth }) {
     }
   }, [props]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+      setMobileOpen(false);
+    }
+  };
+
   return (
     <>
-      <header className="w-full bg-white text-black  py-4 border-b-2 border-black">
-        <div className="container mx-auto flex justify-between items-center px-6">
-
-
-          <Link href="/" className="flex items-center gap-3">
+      <header
+        className={`w-full bg-white/95 backdrop-blur-md sticky top-0 z-[100] transition-shadow duration-300 ${
+          scrolled ? 'shadow-lg' : 'border-b border-gray-100'
+        }`}
+      >
+        {/* Fixed height container - prevents layout shift */}
+        <div className="container mx-auto flex justify-between items-center px-6 h-20">
+          <Link href="/" className="flex items-center">
             <img
               src="https://res.cloudinary.com/dnbklbswg/image/upload/v1769090381/WhatsApp_Image_2026-01-22_at_09.56.18_2_yn4krk.jpg"
               alt="Logo de la tienda"
-              className="h-20 w-40 md:h-40 md:w-72 object-contain transition-transform duration-300 hover:scale-105 "
+              className={`h-14 w-36 md:h-14 md:w-44 object-contain transition-transform duration-300 origin-left ${
+                scrolled ? 'scale-[0.85]' : 'scale-100'
+              }`}
             />
           </Link>
 
-
-          <nav className="flex md:text-xl md:gap-10 text-xs gap-1 font-medium">
-            <Link
-              href="/Contacto"
-              className="
-      relative
-      text-xl
-      font-semibold
-      text-black
-      transition-all
-      duration-300
-      hover:text-turquoise
-
-      after:absolute
-      after:left-0
-      after:-bottom-1
-      after:h-[2px]
-      after:w-0
-      after:bg-darkTurquoise
-      after:transition-all
-      after:duration-300
-      hover:after:w-full
-    "
-            >
-              Contacto
-            </Link>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              link.href.startsWith('#') ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="relative text-base font-semibold text-darkGray transition-all duration-300 hover:text-turquoise after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-turquoise after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="relative text-base font-semibold text-darkGray transition-all duration-300 hover:text-turquoise after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-turquoise after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  {link.label}
+                </Link>
+              )
+            ))}
           </nav>
 
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg text-darkGray hover:bg-gray-100 transition"
+          >
+            {mobileOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            mobileOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <nav className="flex flex-col px-6 pb-4 border-t border-gray-100">
+            {navLinks.map((link) => (
+              link.href.startsWith('#') ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="py-3 text-base font-medium text-darkGray hover:text-turquoise transition-colors border-b border-gray-50 last:border-0"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="py-3 text-base font-medium text-darkGray hover:text-turquoise transition-colors border-b border-gray-50 last:border-0"
+                >
+                  {link.label}
+                </Link>
+              )
+            ))}
+          </nav>
         </div>
       </header>
 
-
       {flashMessage && (
         <div
-          className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 
-            ${flashMessage.type === 'success' ? 'bg-black text-white' : 'bg-red-600 text-white'} 
-            px-6 py-4 rounded-lg shadow-xl animate-slideDown`}
+          className={`fixed top-20 left-1/2 transform -translate-x-1/2 z-[200] transition-all duration-500
+            ${flashMessage.type === 'success' ? 'bg-darkGray text-white' : 'bg-red-600 text-white'}
+            px-6 py-4 rounded-xl shadow-xl animate-slideDown`}
         >
           {flashMessage.message}
         </div>
       )}
 
- 
       <style>
         {`
           @keyframes slideDown {
