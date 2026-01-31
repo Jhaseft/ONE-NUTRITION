@@ -56,7 +56,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <FaMapMarkerAlt className="text-turquoise flex-shrink-0" size={14} />
-                Chile
+                Cochabamba - Bolivia
               </li>
             </ul>
           </div>
