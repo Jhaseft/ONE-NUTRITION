@@ -15,11 +15,11 @@ export default function AboutUs() {
             className="relative"
           >
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-turquoise rounded-2xl" />
-            <div className="relative bg-gradient-to-br from-turquoise/10 to-darkTurquoise/10 rounded-2xl p-10 flex items-center justify-center min-h-[400px]">
+            <div className="relative bg-gradient-to-br from-turquoise/10 to-darkTurquoise/10 rounded-2xl p-6 flex items-center justify-center min-h-[450px]">
               <img
-                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1769090381/WhatsApp_Image_2026-01-22_at_09.56.18_2_yn4krk.jpg"
+                src="https://res.cloudinary.com/dai7rtja6/image/upload/v1769822508/oneNutrition_k2sr7c.jpg"
                 alt="ONE NUTRITION"
-                className="w-64 h-64 object-contain drop-shadow-xl"
+                className="w-full max-w-lg object-contain drop-shadow-xl rounded-lg"
               />
             </div>
           </motion.div>

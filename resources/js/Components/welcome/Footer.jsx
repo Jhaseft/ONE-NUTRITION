@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { FaInstagram, FaWhatsapp, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp, FaFacebook, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -52,7 +52,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <FaPhone className="text-turquoise flex-shrink-0" size={14} />
-                +56 978843627
+                +34 631 07 88 30
               </li>
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <FaMapMarkerAlt className="text-turquoise flex-shrink-0" size={14} />
@@ -69,7 +69,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://www.instagram.com/maro_uniformes_?igsh=MTZwcm02bzdmMnl5ZA=="
+                href="https://www.instagram.com/one_nutrition_labs?igsh=ODN2aGNpamF3ZTlu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:text-white transition-all duration-300"
@@ -77,7 +77,15 @@ export default function Footer() {
                 <FaInstagram size={18} />
               </a>
               <a
-                href="https://wa.me/56978843627"
+                href="https://www.facebook.com/share/1CCoJ3pwgN/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:text-white transition-all duration-300"
+              >
+                <FaFacebook size={18} />
+              </a>
+              <a
+                href="https://wa.me/34631078830"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:bg-turquoise hover:text-white transition-all duration-300"

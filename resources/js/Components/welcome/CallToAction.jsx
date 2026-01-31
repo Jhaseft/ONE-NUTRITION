@@ -28,7 +28,7 @@ export default function CallToAction() {
           </p>
 
           <a
-            href="https://wa.me/56978843627"
+            href="https://wa.me/34631078830"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-10 py-4 bg-turquoise text-white font-semibold text-lg rounded-full hover:bg-white hover:text-darkGray transition-all duration-300 shadow-xl shadow-turquoise/20 hover:shadow-turquoise/40"

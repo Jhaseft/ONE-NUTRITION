@@ -32,7 +32,7 @@ export default function Layout({ title, auth, children, fullWidth = false }) {
         />
 
         <a
-          href="https://wa.me/56978843627"
+          href="https://wa.me/34631078830"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 w-16 h-16 rounded-full bg-turquoise shadow-xl flex items-center justify-center hover:bg-darkTurquoise transition z-[8000]"

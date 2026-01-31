@@ -46,27 +46,28 @@ export default function Header({ auth }) {
       const el = document.querySelector(href);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
+        setMobileOpen(false);
+      } else {
+        // Not on the home page — navigate to home with the hash
+        window.location.href = '/' + href;
       }
-      setMobileOpen(false);
     }
   };
 
   return (
     <>
       <header
-        className={`w-full bg-white/95 backdrop-blur-md sticky top-0 z-[100] transition-shadow duration-300 ${
-          scrolled ? 'shadow-lg' : 'border-b border-gray-100'
-        }`}
+        className={`w-full bg-white/95 backdrop-blur-md sticky top-0 z-[100] transition-shadow duration-300 ${scrolled ? 'shadow-lg' : 'border-b border-gray-100'
+          }`}
       >
         {/* Fixed height container - prevents layout shift */}
-        <div className="container mx-auto flex justify-between items-center px-6 h-20">
+        <div className="container mx-auto flex justify-between items-center px-6 h-24">
           <Link href="/" className="flex items-center">
             <img
-              src="https://res.cloudinary.com/dnbklbswg/image/upload/v1769090381/WhatsApp_Image_2026-01-22_at_09.56.18_2_yn4krk.jpg"
+              src="https://res.cloudinary.com/dai7rtja6/image/upload/v1769822795/logo-one-nutrition-removebg-preview_rlwgbi.png"
               alt="Logo de la tienda"
-              className={`h-14 w-36 md:h-14 md:w-44 object-contain transition-transform duration-300 origin-left ${
-                scrolled ? 'scale-[0.85]' : 'scale-100'
-              }`}
+              className={`h-24 w-52 md:h-28 md:w-64 object-contain transition-transform duration-300 origin-left ${scrolled ? 'scale-[0.85]' : 'scale-100'
+                }`}
             />
           </Link>
 
@@ -105,9 +106,8 @@ export default function Header({ auth }) {
 
         {/* Mobile menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            mobileOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
-          }`}
+          className={`md:hidden overflow-hidden transition-all duration-300 ${mobileOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'
+            }`}
         >
           <nav className="flex flex-col px-6 pb-4 border-t border-gray-100">
             {navLinks.map((link) => (

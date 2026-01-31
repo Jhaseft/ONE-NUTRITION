@@ -53,9 +53,9 @@ export default function Hero() {
             <div className="relative">
               <div className="absolute inset-0 bg-turquoise/20 rounded-full blur-3xl scale-75" />
               <img
-                src="https://res.cloudinary.com/dnbklbswg/image/upload/v1769090381/WhatsApp_Image_2026-01-22_at_09.56.18_2_yn4krk.jpg"
+                src="https://res.cloudinary.com/dai7rtja6/image/upload/v1769822795/logo-one-nutrition-removebg-preview_rlwgbi.png"
                 alt="ONE NUTRITION"
-                className="relative w-80 h-80 object-contain drop-shadow-2xl"
+                className="relative w-[28rem] h-[28rem] object-contain drop-shadow-2xl"
               />
             </div>
           </motion.div>
